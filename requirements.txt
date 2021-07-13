@@ -46,7 +46,6 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 jmespath==0.10.0
 lazy-object-proxy==1.4.3
-LibAppArmor==3.0.1
 libmsym==0.2.4
 lxml==4.6.2
 Markdown==3.3.4
