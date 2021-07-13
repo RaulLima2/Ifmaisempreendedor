@@ -1,0 +1,98 @@
+@import 'index.css';
+
+body {
+    margin: 0px;
+}
+
+figure {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+}
+
+figure a {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+
+    justify-content: center;
+
+}
+
+figure a img {
+    width: 70%;
+    height: 25%;
+
+    margin: 0px;
+}
+
+
+
+.content {
+    width: 100vw;
+    height: 200vh;
+    
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-image: var(--background_site);
+    
+}
+
+.box {
+    width: 30em;
+    height: 75em;
+
+    border-radius: 0.5em;
+
+    background-image: var(--image);
+
+}
+
+div.center-explain-text {
+    text-align: center;
+}
+
+form {
+    display: grid;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+form div {
+    display: grid;
+    align-items: center;
+}
+
+form div label.label_form_insert{
+    margin: 0em 0em 1em 0em;
+}
+
+form div button {
+    width: 14em;
+    height: 3em;
+
+    margin: 3em 5em 5em 5em;
+    
+    border-radius: 0.5em;
+    
+    border: none;
+    background-color: var(--items);
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    transition-duration: 0.6s;
+}
+
+form div button:hover {
+    background-color: var(--hover);
+    color: white;
+}
+

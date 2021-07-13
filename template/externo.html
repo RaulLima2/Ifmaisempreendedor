@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+    {% block title%} Swot: Fatores Externos {% endblock %}   
+    {% block css%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='questao.css') }}">
+    {% endblock %}
+    {% block nav %}
+    {% endblock %}
+    {% block content %}
+    <form action="/MatrixSwot" method="POST">
+        {% for umaquestao in questaoswotexterno %}
+        <div>
+            <label> {{ umaquestao }} </label>
+            <select name="{{ umaquestao }}">
+                {% for umarespostaclassificacao in respontaswotexternoclassificacao  %}
+                    <option value="{{ umarespostaclassificacao }}" required > {{ umarespostaclassificacao }} </option>
+                {% endfor %}
+            </select>
+            <div>
+                <select name="{{ umaquestao }}">
+                    {% for umarepostaimportancia in  respostaswotexternoimportancia  %}
+                    <option value="{{ umarepostaimportancia }}" required> {{ umarepostaimportancia }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endfor %}
+        <div>
+            <button name="submit">
+                <a>
+                    Enviar
+                </a>
+            </button>
+        </div>
+    </form>
+    {% endblock %}
+    {% block footer %}{% endblock %}

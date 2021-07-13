@@ -1,0 +1,30 @@
+<!doctype html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        {% block css %}
+        {% endblock %}
+        <title> 
+            {% block title %}{% endblock %}
+        </title>
+    </head>
+    {% block nav %}
+    {% endblock %}
+    <body>
+        <div class="content"> 
+            <div class="box">
+                <figure>
+                    <a onclick="location.href='/SwotInterno'">
+                        <img src="{{ url_for('static', filename='logo_ifmais_empreendedor.png') }}" alt="image 1">
+                    </a>
+                </figure>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+    <footer>
+        {% block footer %}{% endblock %}
+    </footer>
+</html>

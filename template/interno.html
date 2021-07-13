@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+    {% block title%} Swot: Fatores Internos {% endblock %}   
+    {% block css%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='questao.css') }}">
+    {% endblock %}
+    {% block nav %}
+    {% endblock %}
+    {% block content %}
+    <form action="/SwotExterno" method="POST">
+        <div>
+            <label>Insira seu nome:</label>
+            <input type="text"  name="Nomeempreendedora" required />
+        </div>
+
+        {% for umaquestao in questaoswotinterno %}
+        <div>
+            <label> {{ umaquestao }} </label>
+            <select name="{{ umaquestao }}">
+                {% for umarespostaclassificacao in respontaswotinternoclassificacao %}
+                    <option   value="{{ umarespostaclassificacao }}" required > {{ umarespostaclassificacao }} </option>
+                {% endfor %}
+            </select>
+            <div>
+                <select name="{{ umaquestao }}">
+                    {% for umarepostaimportancia in respostaswotinternoimportancia %}
+                        <option   value="{{ umarepostaimportancia }}" required> {{ umarepostaimportancia }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endfor %}
+        <div>
+            <button name="submit">
+                <a>
+                    Continuar
+                </a>
+            </button>
+        </div>
+    </form>
+    {% endblock %}
+    {% block footer %}{% endblock %}

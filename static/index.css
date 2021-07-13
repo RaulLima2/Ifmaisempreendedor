@@ -1,0 +1,36 @@
+:root {
+    --background_site: url("image_1.png");
+    --color-font: rgb(1, 1, 1);
+    --painel: #00FA9A;
+    --items: #C4C4C4;
+    --hover: #4CAF50;
+    --image: url("image.png");
+}
+
+html {
+    background-image: var(--background_site);
+}
+
+
+figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+figure img {
+    margin: 3em 3em 3em 3em;
+    width: 70em;
+    height: 40em;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: var(--color-font);
+    text-align: center;
+}
+
