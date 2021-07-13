@@ -74,8 +74,6 @@ PyJWT==1.7.1
 pylint==2.6.0
 pyOpenSSL==20.0.1
 pyparsing==2.4.7
-PyQt5==5.15.4
-PyQt5-sip==12.9.0
 python-dateutil==2.8.1
 pytz==2020.4
 queuelib==1.5.0
