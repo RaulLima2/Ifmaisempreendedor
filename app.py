@@ -38,7 +38,9 @@ def matrix_swot():
 
         return "Enviado"
     
-
+@app.route('/favicon', methods=['GET', 'POST'])
+def favicon():
+    return "ok"
 
 if __name__ == '__main__':
     app.run(debug=True)
