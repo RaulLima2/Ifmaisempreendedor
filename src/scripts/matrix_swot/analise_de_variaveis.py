@@ -1,7 +1,7 @@
 import csv
 import numpy as np
 import pandas as pd
-from .API import Gmail
+from API import Gmail
 from .interna import MatrixInterna
 from .externa import MatrixExterna
 
