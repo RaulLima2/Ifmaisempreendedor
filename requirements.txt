@@ -89,7 +89,6 @@ rsa==4.7.2
 service-identity==18.1.0
 six==1.16.0
 soupsieve==2.2.1
-team==1.0
 toml==0.10.2
 Twisted==21.2.0
 uritemplate==3.0.1
