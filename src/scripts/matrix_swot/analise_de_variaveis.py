@@ -1,7 +1,6 @@
 import csv
 import numpy as np
 import pandas as pd
-from API import Gmail
 from .interna import MatrixInterna
 from .externa import MatrixExterna
 
@@ -28,7 +27,7 @@ class MatrixSwot(object):
             self.nome_doarquivo = "{}_externo.csv".format(self.nome_doarquivo)
             self.dicionario_interno.to_csv(self.nome_doarquivo, delimiter=",")
 
-    def enviar_matrixswot(self, gmail=Gmail(), endereco_eletronico=str, assunto_doenvio=str):
+    def enviar_matrixswot(self, gmail, endereco_eletronico=str, assunto_doenvio=str):
         try:
             gmail.conectar_gmail()
             gmail.pegar_gmail(endereco_eletronico)

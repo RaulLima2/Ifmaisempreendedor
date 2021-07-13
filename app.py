@@ -1,6 +1,7 @@
 from flask import request, Flask, render_template
 from jinja2 import Template
-from src.scripts.matrix_swot import respontaswotexternoclassificacao, respostaswotexternoimportancia, respontaswotinternoclassificacao, respostaswotinternoimportancia, questaoswotexterno, questaoswotinterno, swot
+from src import MatrixSwot, Gmail
+from src.scripts.matrix_swot import respontaswotexternoclassificacao, respostaswotexternoimportancia, respontaswotinternoclassificacao, respostaswotinternoimportancia, questaoswotexterno, questaoswotinterno
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 
@@ -19,8 +20,8 @@ def swot_externo():
 
     if request.method == "POST":
         resposta_interno = request.form.to_dict(flat=False)
-        swot.dicionario_interno = resposta_interno
-        swot.pegar_pontosfortesefracosda_interna(dicionario_derepostas=swot.dicionario_interno)
+        MatrixSwot().dicionario_interno = resposta_interno
+        MatrixSwot().pegar_pontosfortesefracosda_interna(dicionario_derepostas=MatrixSwot().dicionario_interno)
     
 
     return render_template('externo.html', respontaswotexternoclassificacao=respontaswotexternoclassificacao, respostaswotexternoimportancia=respostaswotexternoimportancia, questaoswotexterno=questaoswotexterno)
@@ -30,10 +31,10 @@ def swot_externo():
 def matrix_swot():
     if request.method == 'POST':
         resposta_externo = request.form.to_dict(flat=False)
-        swot.dicionario_externo = resposta_externo
-        swot.pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=swot.dicionario_externo)
-        swot.prepar_arquivo()
-        swot.enviar_matrixswot(endereco_eletronico="raulbrunoslimagmail.com", assunto_doenvio="Dados das Empreendedoras")
+        MatrixSwot().dicionario_externo = resposta_externo
+        MatrixSwot().pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=MatrixSwot().dicionario_externo)
+        MatrixSwot().prepar_arquivo()
+        MatrixSwot().enviar_matrixswot(gmail=Gmail(),endereco_eletronico="raulbrunoslimagmail.com", assunto_doenvio="Dados das Empreendedoras")
 
         return "Enviado"
     

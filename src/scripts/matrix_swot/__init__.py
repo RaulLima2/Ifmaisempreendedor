@@ -21,5 +21,3 @@ questaoswotexterno = [
                         "A empresa tem crescimento no mercado", "Possibilidade de oferta para mercados emergentes", "Existe barreira para desenvolvimento",
                         "Tem facilidade de recolher informações de público alvo"
                     ]
-
-swot = MatrixSwot()
