@@ -20,8 +20,7 @@ def swot_externo():
 
     if request.method == "POST":
         resposta_interno = request.form.to_dict(flat=False)
-        MatrixSwot().dicionario_interno = resposta_interno
-        MatrixSwot().pegar_pontosfortesefracosda_interna(dicionario_derepostas=MatrixSwot().dicionario_interno)
+        MatrixSwot().pegar_pontosfortesefracosda_interna(dicionario_derepostas=resposta_interno)
     
 
     return render_template('externo.html', respontaswotexternoclassificacao=respontaswotexternoclassificacao, respostaswotexternoimportancia=respostaswotexternoimportancia, questaoswotexterno=questaoswotexterno)
@@ -31,8 +30,7 @@ def swot_externo():
 def matrix_swot():
     if request.method == 'POST':
         resposta_externo = request.form.to_dict(flat=False)
-        MatrixSwot().dicionario_externo = resposta_externo
-        MatrixSwot().pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=MatrixSwot().dicionario_externo)
+        MatrixSwot().pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=resposta_externo)
         MatrixSwot().prepar_arquivo()
         MatrixSwot().enviar_matrixswot(gmail=Gmail(),endereco_eletronico="raulbrunoslimagmail.com", assunto_doenvio="Dados das Empreendedoras")
 
