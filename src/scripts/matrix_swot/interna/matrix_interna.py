@@ -34,7 +34,7 @@ class MatrixInterna():
                     "Grau de Importancia":valores_dascolunas[i][1],
                     "Pontuação": valores_dascolunas[i]
                 }
-            ) 
+            , ignore_index=True) 
 
 
         return dados_organizadosinternos, nome_dodado
