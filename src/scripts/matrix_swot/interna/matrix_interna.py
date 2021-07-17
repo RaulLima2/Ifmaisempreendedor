@@ -17,25 +17,35 @@ class MatrixInterna():
     def organizar_dadosinternos(self, dicionario_derepostas=dict):
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
-        nome_dodado = valores_dascolunas[0]
+        nome_dodado = valores_dascolunas[0][0]
+        vetor_depontuacao = np.array(valores_dascolunas[16])
 
         dados_organizadosinternos = pd.DataFrame({
                                                 "Pergunta": nomes_dascolunas[1],
                                                 "Classificação": valores_dascolunas[1][0],
                                                 "Grau de Importancia":valores_dascolunas[1][1],
-                                                "Pontuação": valores_dascolunas[1]
+                                                "Pontuação": [vetor_depontuacao[0]]
                                             })
         
-        for i in range(2, len(nomes_dascolunas) - 1):
-            dados_organizadosinternos.append(
-                {
-                    "Pergunta": nomes_dascolunas[i],
-                    "Classificação": valores_dascolunas[i][0],
-                    "Grau de Importancia":valores_dascolunas[i][1],
-                    "Pontuação": valores_dascolunas[i]
-                }
-            , ignore_index=True) 
+        for i in range(2, len(nomes_dascolunas) - 2):
+            j = 1
+            dados_organizadosinternos = dados_organizadosinternos.append(
+                                                                            {
+                                                                                "Pergunta": nomes_dascolunas[i],
+                                                                                "Classificação": valores_dascolunas[i][0],
+                                                                                "Grau de Importancia":valores_dascolunas[i][1],
+                                                                                "Pontuação": [vetor_depontuacao[j]]
+                                                                            }
+                                                                        , ignore_index=True)
+            j += 1
 
+
+
+        del j
+        del i
+        del nomes_dascolunas
+        del valores_dascolunas
+        del vetor_depontuacao
 
         return dados_organizadosinternos, nome_dodado
 
@@ -48,7 +58,7 @@ class MatrixInterna():
     def analisar_resposta(self, dicionario_derepostas=dict):
         lista_derespostas = list(dicionario_derepostas.values())
         
-        vetor_depontuacao = np.zeros(len(lista_derespostas) + 1)
+        vetor_depontuacao = []
 
         combinacao_fraca = self.bancodepontuacoesfraco["Combinações Fraca"]
         pontuacao_fraca = self.bancodepontuacoesfraco["Pontuação Fraca"]
@@ -56,11 +66,16 @@ class MatrixInterna():
         pontuacao_forte = self.bancodepontuacoesforte["Pontuação Forte"]
 
         for umarespostas in lista_derespostas:    
-            for umacombinacao_fraca, umapontuacao_fraca, umacombinacao_forte, umapontuacao_forte in zip(combinacao_fraca, pontuacao_fraca, combinacao_forte, pontuacao_forte):                
+            i = 0                
+            for umacombinacao_fraca, umapontuacao_fraca, umacombinacao_forte, umapontuacao_forte in zip(combinacao_fraca, pontuacao_fraca, combinacao_forte, pontuacao_forte):
                 if np.array_equal(umacombinacao_fraca, umarespostas) == True:
-                    vetor_depontuacao = np.append(vetor_depontuacao, umapontuacao_fraca)
+                    vetor_depontuacao.append(umapontuacao_fraca)
+                    print('1\n')
                 elif np.array_equal(umacombinacao_forte, umarespostas) == True:
-                    vetor_depontuacao = np.append(vetor_depontuacao, umapontuacao_forte)
+                    vetor_depontuacao.append(umapontuacao_forte)
+            
+            i += 1
+        del i
                 
         
-        return vetor_depontuacao
+        return np.array(vetor_depontuacao)

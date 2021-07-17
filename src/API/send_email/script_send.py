@@ -7,8 +7,6 @@ from email.mime.base import MIMEBase
 from email import encoders
 from .config_connection import Connection
 
-
-
 class Gmail(object):
     def __init__(self):
         self.gmails = list
@@ -21,18 +19,18 @@ class Gmail(object):
     def pegar_assunto(self, assunto=str):
         self.assunto = assunto
 
-    def conectar_gmail(self):
+    def conectar_gmail(self, connection=Connection()):
         try:
-            self.conecao = Connection(file_token="config_connection/client_secret.json", api_name="gmail", api_version="v1", scope=['https://mail.google.com/']).get_connection()
+            self.conecao = connection
             return 200, "OK"
         except Exception:
             print(Exception)
             return 401, "Error"
 
-    def enviar_gmail(self, dicionario_envio=dict):
+    def enviar_gmail(self):
         try:
-            arquivos_anexados = dicionario_envio["anexados"]
-            mensagem_gmail = dicionario_envio["mensagem"]
+            arquivos_anexados = [r'.\Anexar\*.csv']
+            mensagem_gmail = "Segue em anexo os dados das matrix swot e a analise"
             mimemessage = MIMEMultipart()
 
             mimemessage['to'] = self.gmails

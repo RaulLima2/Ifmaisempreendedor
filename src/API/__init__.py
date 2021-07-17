@@ -1,3 +1,2 @@
 from .send_email import Gmail
-
-Gmail()
+from .send_email.config_connection import Connection

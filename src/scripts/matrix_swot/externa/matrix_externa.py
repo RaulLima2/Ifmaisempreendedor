@@ -19,25 +19,33 @@ class MatrixExterna():
     def organizar_dadosexterno(self, dicionario_derepostas=dict):
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
-        nome_dodado = valores_dascolunas[0]
+        nome_dodado = valores_dascolunas[0][0]
+        vetor_depontuacao = np.array(valores_dascolunas[17])
 
         dados_organizadosexterno = pd.DataFrame({
                                                 "Pergunta": nomes_dascolunas[1],
                                                 "Classificação": valores_dascolunas[1][0],
                                                 "Grau de Importancia":valores_dascolunas[1][1],
-                                                "Pontuação": valores_dascolunas[1]
+                                                "Pontuação": [vetor_depontuacao[0]]
                                             })
             
-        for i in range(2, len(nomes_dascolunas) - 1):
-            dados_organizadosexterno.append(
+        for i in range(2, len(nomes_dascolunas) - 2):
+            j = 1
+            dados_organizadosexterno = dados_organizadosexterno.append(
                 {
                     "Pergunta": nomes_dascolunas[i],
                     "Classificação": valores_dascolunas[i][0],
                     "Grau de Importancia":valores_dascolunas[i][1],
-                    "Pontuação": valores_dascolunas[i]
+                    "Pontuação": [vetor_depontuacao[j]]
                 }
-            , ignore_index=True) 
+            , ignore_index=True)
 
+            j += 1
+
+        del i
+        del j
+        del nomes_dascolunas
+        del valores_dascolunas
 
         return dados_organizadosexterno, nome_dodado
 
@@ -53,7 +61,7 @@ class MatrixExterna():
     def analisar_respostas(self, dicionario_derepostas=dict):
         lista_derespostas = list(dicionario_derepostas.values())
         
-        vetor_depontuacao = np.zeros(len(lista_derespostas) + 1)
+        vetor_depontuacao = []
 
         combinacao_oportunidade = self.bancodepontuacoesoportunidade["Combinações Oportunidade"]
         pontuacao_oportunidade = self.bancodepontuacoesoportunidade["Pontuação Oportunidade"]
@@ -63,9 +71,9 @@ class MatrixExterna():
         for umarespostas in lista_derespostas:    
             for umacombinacao_oportunidade, umapontuacao_oportunidade, umacombinacao_ameaca, umapontuacao_ameaca in zip(combinacao_oportunidade, pontuacao_oportunidade, combinacao_ameaca, pontuacao_ameaca):                
                 if np.array_equal(umacombinacao_oportunidade, umarespostas) == True:
-                    vetor_depontuacao = np.append(vetor_depontuacao, umapontuacao_oportunidade)
+                    vetor_depontuacao.append(umapontuacao_oportunidade)
                 elif np.array_equal(umacombinacao_ameaca, umarespostas) == True:
-                    vetor_depontuacao = np.append(vetor_depontuacao, umapontuacao_ameaca)
+                    vetor_depontuacao.append(umapontuacao_ameaca)
                 
         
-        return vetor_depontuacao
+        return np.array(vetor_depontuacao)
