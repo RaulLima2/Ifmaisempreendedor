@@ -18,7 +18,9 @@ class MatrixInterna():
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
         nome_dodado = valores_dascolunas[0][0]
-        vetor_depontuacao = np.array(valores_dascolunas[16])
+        vetor_depontuacao = np.array(valores_dascolunas[15])
+
+        print(vetor_depontuacao)
 
         dados_organizadosinternos = pd.DataFrame({
                                                 "Pergunta": nomes_dascolunas[1],
@@ -27,8 +29,8 @@ class MatrixInterna():
                                                 "Pontuação": [vetor_depontuacao[0]]
                                             })
         
-        for i in range(2, len(nomes_dascolunas) - 2):
-            j = 1
+        j = 1
+        for i in range(2, len(nomes_dascolunas) - 1):
             dados_organizadosinternos = dados_organizadosinternos.append(
                                                                             {
                                                                                 "Pergunta": nomes_dascolunas[i],
@@ -38,7 +40,6 @@ class MatrixInterna():
                                                                             }
                                                                         , ignore_index=True)
             j += 1
-
 
 
         del j
@@ -70,12 +71,10 @@ class MatrixInterna():
             for umacombinacao_fraca, umapontuacao_fraca, umacombinacao_forte, umapontuacao_forte in zip(combinacao_fraca, pontuacao_fraca, combinacao_forte, pontuacao_forte):
                 if np.array_equal(umacombinacao_fraca, umarespostas) == True:
                     vetor_depontuacao.append(umapontuacao_fraca)
-                    print('1\n')
                 elif np.array_equal(umacombinacao_forte, umarespostas) == True:
                     vetor_depontuacao.append(umapontuacao_forte)
             
             i += 1
         del i
                 
-        
         return np.array(vetor_depontuacao)

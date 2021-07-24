@@ -20,10 +20,10 @@ def swot_externo():
     interno = MatrixSwot()
     if request.method == "POST":
         resposta_interno = request.form.to_dict(flat=False)
-        reesposta_interno = resposta_interno.pop('submit')
         dados_internos, nomde_arquivo = interno.pegar_pontosfortesefracosda_interna(dicionario_derepostas=resposta_interno)
         interno.nome_doarquivo = nomde_arquivo
         interno.prepar_arquivo(dicionario=dados_internos)
+        interno.enviar_matrixswot(gmail=gmail,endereco_eletronico="raulbrunoslima@gmail.com", assunto_doenvio="Dados das Empreendedoras")
 
     return render_template('externo.html', respontaswotexternoclassificacao=respontaswotexternoclassificacao, respostaswotexternoimportancia=respostaswotexternoimportancia, questaoswotexterno=questaoswotexterno)
 
@@ -38,7 +38,7 @@ def matrix_swot():
         dados_externos, nomede_arquivo = externo.pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=resposta_externo)
         externo.nome_doarquivo = nomede_arquivo
         externo.prepar_arquivo(dicionario=dados_externos)
-        externo.enviar_matrixswot(gmail=gmail,endereco_eletronico="raulbrunoslimagmail.com", assunto_doenvio="Dados das Empreendedoras")
+        externo.enviar_matrixswot(gmail=gmail,endereco_eletronico="raulbrunoslima@gmail.com", assunto_doenvio="Dados das Empreendedoras")
 
         return "Enviado"
     

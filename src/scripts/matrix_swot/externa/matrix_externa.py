@@ -20,17 +20,17 @@ class MatrixExterna():
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
         nome_dodado = valores_dascolunas[0][0]
-        vetor_depontuacao = np.array(valores_dascolunas[17])
+        vetor_depontuacao = np.array(valores_dascolunas[16])
 
         dados_organizadosexterno = pd.DataFrame({
-                                                "Pergunta": nomes_dascolunas[1],
-                                                "Classificação": valores_dascolunas[1][0],
-                                                "Grau de Importancia":valores_dascolunas[1][1],
+                                                "Pergunta": nomes_dascolunas[0],
+                                                "Classificação": valores_dascolunas[0][0],
+                                                "Grau de Importancia":valores_dascolunas[0][1],
                                                 "Pontuação": [vetor_depontuacao[0]]
                                             })
             
-        for i in range(2, len(nomes_dascolunas) - 2):
-            j = 1
+        j = 1
+        for i in range(1, len(nomes_dascolunas) - 1):
             dados_organizadosexterno = dados_organizadosexterno.append(
                 {
                     "Pergunta": nomes_dascolunas[i],

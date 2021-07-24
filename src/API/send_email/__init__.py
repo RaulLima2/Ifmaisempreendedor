@@ -1,1 +1,1 @@
-from .script_send import Gmail 
+from .script_send import Gmail
