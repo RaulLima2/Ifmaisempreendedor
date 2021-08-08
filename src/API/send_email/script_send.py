@@ -29,7 +29,7 @@ class Gmail(object):
     def pegar_assunto(self, assunto=str):
         self.assunto = assunto
 
-    def pegar_conecao(self, connection=Connection()):
+    def pegar_conecao(self):
         try:
             self.conecao = self.conecao.get_connection()
             return 200, "OK"
@@ -48,28 +48,38 @@ class Gmail(object):
         return self.anexar_arquivo(msg, menssagem)
 
     def anexar_arquivo(self, msg, menssagem):
-        arquivos_anexados = '{local}'.format(local=self.arquivos)
-        tipo_conteudo, encoding = mimetypes.guess_type(arquivos_anexados)
-        tipo_main, tipo_sub = tipo_conteudo.split('/', 1)
+        for arq in self.arquivos:
+            arquivos_anexados = '{local}'.format(local=arq)
+            tipo_conteudo, encoding = mimetypes.guess_type(arquivos_anexados)
+            tipo_main, tipo_sub = tipo_conteudo.split('/', 1)
 
-        if tipo_main == 'text':
-            nomede_arquivo = os.path.basename(arquivos_anexados)
-            arquivo_aberto = open(arquivos_anexados, 'rb')
-            arquivo = MIMEBase(tipo_main, tipo_sub)
-            arquivo.set_payload(arquivo_aberto.read())
-            arquivo.add_header('Content-Disposition', 'attachment', filename=nomede_arquivo)
-            encoders.encode_base64(arquivo)
-            arquivo_aberto.close()
+            if tipo_main == 'text':
+                nomede_arquivo = os.path.basename(arquivos_anexados)
+                arquivo_aberto = open(arquivos_anexados, 'rb')
+                arquivo = MIMEBase(tipo_main, tipo_sub)
+                arquivo.set_payload(arquivo_aberto.read())
+                arquivo.add_header('Content-Disposition', 'attachment', filename=nomede_arquivo)
+                encoders.encode_base64(arquivo)
+                arquivo_aberto.close()
 
-        menssagem.attach(arquivo)
+                menssagem.attach(arquivo)
+
+            if tipo_main == 'application':
+                nomede_arquivo = os.path.basename(arquivos_anexados)
+                arquivo_aberto = open(arquivos_anexados, 'rb')
+                arquivo = MIMEBase(tipo_main, tipo_sub)
+                arquivo.set_payload(arquivo_aberto.read())
+                arquivo.add_header('Content-Disposition', 'attachment', filename=nomede_arquivo)
+                encoders.encode_base64(arquivo)
+                arquivo_aberto.close()
+
+                menssagem.attach(arquivo)
 
         return {'raw': base64.urlsafe_b64encode(menssagem.as_bytes()).decode()}
 
     def enviar_gmail(self):
         try:
             mensagem_gmail = "Segue em anexo os dados das matrix swot e a analise"
-            
-            print('1')
             mensagem = self.conecao.users().messages().send(
                                                                 userId='me',
                                                                 body=self.crear_menssagem(mensagem_gmail)
@@ -78,5 +88,6 @@ class Gmail(object):
 
             return mensagem
         except Exception as error:
+            print(error)
             traceback.print_exc()
         

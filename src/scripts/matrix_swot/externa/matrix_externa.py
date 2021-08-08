@@ -2,24 +2,24 @@ import numpy as np
 import pandas as pd
 import dataclasses
 
+@dataclasses.dataclass
 class MatrixExterna():
     def __init__(self):
         constante_ameaca = "Ameaça"
-        const_oportunidade = "Oportunidade"
+        constante_oportunidade = "Oportunidade"
         self.bancodepontuacoesoportunidade = pd.DataFrame({
-            "Combinações Oportunidade": [[const_oportunidade, "Totalmente importante"], [const_oportunidade, "Muito importante"], [const_oportunidade,"Importante"], [const_oportunidade, "Pouca importância"], [const_oportunidade, "Totalmente sem importância"]],
-            "Pontuação Oportunidade": np.arange(10, 0, -2)
+            "Combinações Oportunidade": [[constante_oportunidade, "Totalmente importante"], [constante_oportunidade, "Muito importante"], [constante_oportunidade,"Importante"], [constante_oportunidade, "Pouca importância"], [constante_oportunidade, "Totalmente sem importância"]],
+            "Pontuação Oportunidade": np.arange(10, -2.5, -2.5)
         })
         
         self.bancodepontuacoesameaca = pd.DataFrame({
             "Combinações Ameaçada": [[constante_ameaca,"Totalmente importante"], [constante_ameaca, "Muito importante"], [constante_ameaca,"Importante"], [constante_ameaca, "Pouca importância"], [constante_ameaca, "Totalmente sem importância"]],
-            "Pontuação Ameaçada": np.arange(10, 0, -2)
+            "Pontuação Ameaçada": np.arange(-10, 2.5, 2.5)
         })
 
     def organizar_dadosexterno(self, dicionario_derepostas=dict):
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
-        nome_dodado = valores_dascolunas[0][0]
         vetor_depontuacao = np.array(valores_dascolunas[16])
 
         dados_organizadosexterno = pd.DataFrame({
@@ -36,7 +36,7 @@ class MatrixExterna():
                     "Pergunta": nomes_dascolunas[i],
                     "Classificação": valores_dascolunas[i][0],
                     "Grau de Importancia":valores_dascolunas[i][1],
-                    "Pontuação": [vetor_depontuacao[j]]
+                    "Pontuação": vetor_depontuacao[j]
                 }
             , ignore_index=True)
 
@@ -47,22 +47,24 @@ class MatrixExterna():
         del nomes_dascolunas
         del valores_dascolunas
 
-        return dados_organizadosexterno, nome_dodado
+        dados_organizadosexterno["Pontuação"] = dados_organizadosexterno["Pontuação"].astype(str).astype(float)
+
+        return dados_organizadosexterno
 
     def analisar_respostasexterna(self, dicionario_derepostas=dict):
 
-        respostas_analisada = self.analisar_respostas(dicionario_derepostas)
+        respostas_analisada = self.analisar_respostase(dicionario_derepostas)
 
         return respostas_analisada
     
     # Função que analisar as respostas que teve como escolha o parametro fraco
     # Que consiste em pontuar as combinações com a parametro fraco
 
-    def analisar_respostas(self, dicionario_derepostas=dict):
+    def analisar_respostase(self, dicionario_derepostas=dict):
         lista_derespostas = list(dicionario_derepostas.values())
         
         vetor_depontuacao = []
-
+        
         combinacao_oportunidade = self.bancodepontuacoesoportunidade["Combinações Oportunidade"]
         pontuacao_oportunidade = self.bancodepontuacoesoportunidade["Pontuação Oportunidade"]
         combinacao_ameaca = self.bancodepontuacoesameaca["Combinações Ameaçada"]

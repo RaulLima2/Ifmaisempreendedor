@@ -2,25 +2,32 @@ import numpy as np
 import pandas as pd
 import dataclasses
 
+@dataclasses.dataclass
 class MatrixInterna():
+    nomedoarquivointerno: str
+
     def __init__(self):
+        self.nomedoarquivointerno = None
         self.bancodepontuacoesforte = pd.DataFrame({
             "Combinações Forte": [["Forte", "Totalmente importante"], ["Forte", "Muito importante"], ["Forte","Importante"], ["Forte", "Pouca importância"], ["Forte", "Totalmente sem importância"]],
-            "Pontuação Forte": np.arange(10, 0, -2)
+            "Pontuação Forte": np.arange(10, -2.5, -2.5)
         })
         
         self.bancodepontuacoesfraco = pd.DataFrame({
             "Combinações Fraca": [["Fraco","Totalmente importante"], ["Fraco", "Muito importante"], ["Fraco","Importante"], ["Fraco", "Pouca importância"], ["Fraco", "Totalmente sem importância"]],
-            "Pontuação Fraca": np.arange(10, 0, -2)
+            "Pontuação Fraca": np.arange(-10, 2.5, 2.5)
         })
 
+    def pegarnomedoarquivointerno(self, nome):
+        self.nomedoarquivointerno = nome
+    
+    def setnomedoarquivointerno(self):
+        return self.nomedoarquivointerno
+        
     def organizar_dadosinternos(self, dicionario_derepostas=dict):
         nomes_dascolunas = list(dicionario_derepostas.keys())
         valores_dascolunas = list(dicionario_derepostas.values())
-        nome_dodado = valores_dascolunas[0][0]
         vetor_depontuacao = np.array(valores_dascolunas[15])
-
-        print(vetor_depontuacao)
 
         dados_organizadosinternos = pd.DataFrame({
                                                 "Pergunta": nomes_dascolunas[1],
@@ -36,19 +43,20 @@ class MatrixInterna():
                                                                                 "Pergunta": nomes_dascolunas[i],
                                                                                 "Classificação": valores_dascolunas[i][0],
                                                                                 "Grau de Importancia":valores_dascolunas[i][1],
-                                                                                "Pontuação": [vetor_depontuacao[j]]
+                                                                                "Pontuação": vetor_depontuacao[j]
                                                                             }
                                                                         , ignore_index=True)
             j += 1
 
+        self.pegarnomedoarquivointerno(valores_dascolunas[0][0])
 
         del j
         del i
         del nomes_dascolunas
         del valores_dascolunas
         del vetor_depontuacao
-
-        return dados_organizadosinternos, nome_dodado
+        dados_organizadosinternos["Pontuação"] = dados_organizadosinternos["Pontuação"].astype(str).astype(float)
+        return dados_organizadosinternos
 
     def analisar_respostasinterna(self, dicionario_derepostas=dict):
 

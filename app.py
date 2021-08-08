@@ -1,6 +1,6 @@
 from flask import request, Flask, render_template
 from jinja2 import Template
-from src import MatrixSwot, gmail
+from src import swot, gmail, gerarrelatorio, enviar_relatorio, empreendedor
 from src.scripts.matrix_swot import respontaswotexternoclassificacao, respostaswotexternoimportancia, respontaswotinternoclassificacao, respostaswotinternoimportancia, questaoswotexterno, questaoswotinterno
 
 app = Flask(__name__, template_folder='template', static_folder='static')
@@ -17,28 +17,26 @@ def swotinterno():
 
 @app.route('/SwotExterno', methods=['GET', 'POST'])
 def swot_externo():
-    interno = MatrixSwot()
     if request.method == "POST":
         resposta_interno = request.form.to_dict(flat=False)
-        dados_internos, nomde_arquivo = interno.pegar_pontosfortesefracosda_interna(dicionario_derepostas=resposta_interno)
-        interno.nome_doarquivo = nomde_arquivo
-        interno.prepar_arquivo(dicionario=dados_internos)
-        interno.enviar_matrixswot(gmail=gmail,endereco_eletronico="raulbrunoslima@gmail.com", assunto_doenvio="Dados das Empreendedoras")
+        empreendedor.getnome(request.form['Nomeempreendedora'])
+        dados_internos = swot.pegar_pontosfortesefracosda_interna(dicionario_derepostas=resposta_interno)
+        swot.prepar_arquivo(nomedoarquivo=empreendedor.setnome()+"interna",dicionario=dados_internos)
 
     return render_template('externo.html', respontaswotexternoclassificacao=respontaswotexternoclassificacao, respostaswotexternoimportancia=respostaswotexternoimportancia, questaoswotexterno=questaoswotexterno)
 
 
 @app.route('/MatrixSwot', methods=['GET', 'POST'])
 def matrix_swot():
-
-    externo = MatrixSwot()
-
     if request.method == 'POST':
         resposta_externo = request.form.to_dict(flat=False)
-        dados_externos, nomede_arquivo = externo.pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=resposta_externo)
-        externo.nome_doarquivo = nomede_arquivo
-        externo.prepar_arquivo(dicionario=dados_externos)
-        externo.enviar_matrixswot(gmail=gmail,endereco_eletronico="raulbrunoslima@gmail.com", assunto_doenvio="Dados das Empreendedoras")
+        dados_externos = swot.pegar_pontosamecaeoportunidadesda_externa(dicionario_derepostas=resposta_externo)
+        swot.prepar_arquivo(nomedoarquivo=empreendedor.setnome()+"externa", dicionario=dados_externos)
+
+        swot.enviar_matrixswot(gmail=gmail,nomedoarquivo=[empreendedor.setnome()+"externa", empreendedor.setnome()+"interna"], enderecoeletronico="raulbrunoslima@gmail.com", assuntodoenvio="Dados das Empreendedoras")
+        
+        gerarrelatorio(swot.retornarnomedoarquivo())
+        enviar_relatorio(gmail=gmail,enderecoeletronico="raulbrunoslima@gmail.com", assuntodoenvio="Dados das Empreendedoras")
 
         return "Enviado"
     
