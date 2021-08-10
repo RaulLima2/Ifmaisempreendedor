@@ -24,7 +24,7 @@ class AnaliseQualitativa(Analise):
         classification_sentiments = df
         return classification_sentiments
 
-    @numba.jit(nopython=True, parallel=True)
+    @numba.jit(nopython=True)
     def analisetextblob(self, dataframe, chaves, item):
         try:
             itemtranduzido = str(TextBlob(item).translate(to='en'))
