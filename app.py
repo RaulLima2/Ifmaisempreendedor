@@ -46,5 +46,4 @@ def favicon():
     return "ok"
 
 if __name__ == '__main__':
-    os.System("""python -c "import nltk; nltk.download('popular')" """)
     app.run(debug=True)

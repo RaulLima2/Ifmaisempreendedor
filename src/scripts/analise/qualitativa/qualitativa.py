@@ -1,6 +1,4 @@
-import nltk
 import dataclasses
-from nltk import data
 import pandas as pd
 from textblob import TextBlob
 from src.scripts.analise.analise import Analise
