@@ -1,5 +1,4 @@
 from .analise_de_variaveis import MatrixSwot
-
 # Variaveis para analise
 respontaswotinternoclassificacao = ['Forte', 'Fraco']
 respostaswotinternoimportancia = ["Totalmente importante", "Muito importante", "Importante", "Pouca importância","Totalmente sem importância"]

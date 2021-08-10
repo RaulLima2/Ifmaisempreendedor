@@ -1,0 +1,5 @@
+# ANEXAR/ATTACH:
+# *.CSV
+# *.PDF
+# *.PNG
+# *.TEX

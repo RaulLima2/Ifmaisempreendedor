@@ -105,4 +105,6 @@ regex==2021.7.6
 textblob==0.15.3
 tqdm==4.62.0
 pylatex==1.4.1
-libretranslatepy==2.1.1 
+libretranslatepy==2.1.1
+numba==1.15
+llvmlite==0.36

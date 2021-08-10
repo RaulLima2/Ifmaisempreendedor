@@ -1,3 +1,4 @@
+import numba
 import dataclasses
 import pandas as pd
 from textblob import TextBlob
@@ -23,6 +24,7 @@ class AnaliseQualitativa(Analise):
         classification_sentiments = df
         return classification_sentiments
 
+    @numba.jit(nopython=True, parallel=True)
     def analisetextblob(self, dataframe, chaves, item):
         try:
             itemtranduzido = str(TextBlob(item).translate(to='en'))

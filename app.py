@@ -46,5 +46,4 @@ def favicon():
     return "ok"
 
 if __name__ == '__main__':
-    os.System("mkdir Anexar")
     app.run(debug=True)
