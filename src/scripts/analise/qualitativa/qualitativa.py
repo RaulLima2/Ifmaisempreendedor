@@ -6,8 +6,6 @@ from textblob import TextBlob
 from src.scripts.analise.analise import Analise
 from textblob.sentiments import NaiveBayesAnalyzer
 
-nltk.download('movie_reviews')
-nltk.download('punkt')
 @dataclasses.dataclass
 class AnaliseQualitativa(Analise):
     def __init__(cls):
