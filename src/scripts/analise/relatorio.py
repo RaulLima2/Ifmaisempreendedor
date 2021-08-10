@@ -10,7 +10,7 @@ def criar_extrutura(doc):
     doc.preamble.append(Command('title', 'Relatorio da Analise Swot'))
     doc.preamble.append(Command('author', 'Raul Bruno Santos Lima'))
     doc.preamble.append(Command('date', NoEscape(r'\today')))
-    doc.create(Figure(position='htp!')).add_image("static/logo_ifmais_empreendedor.png", width='89px')
+    doc.create(Figure(position='htp!').add_image("static/logo_ifmais_empreendedor.png", width='89px'))
     doc.append(NoEscape(r'\maketitle'))
 
 def criarsection(doc, namesection=str, text=list):
