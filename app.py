@@ -1,3 +1,4 @@
+import os
 from flask import request, Flask, render_template
 from jinja2 import Template
 from src import swot, gmail, gerarrelatorio, enviar_relatorio, empreendedor
@@ -45,4 +46,5 @@ def favicon():
     return "ok"
 
 if __name__ == '__main__':
+    os.System("mkdir Anexar")
     app.run(debug=True)
