@@ -6,15 +6,16 @@ from textblob import TextBlob
 from src.scripts.analise.analise import Analise
 from textblob.sentiments import NaiveBayesAnalyzer
 
+nltk.download('movie_reviews')
+nltk.download('punkt')
 @dataclasses.dataclass
 class AnaliseQualitativa(Analise):
     def __init__(cls):
         cls.nomemetodo = "Analise Qualitativa"
     
     def analisaramostras(self, dataframepandas=pd.DataFrame):
-        nltk.download('movie_reviews')
-        nltk.download('punkt')
         dataframe = {}
+
         chaves = ["amostras", "classificação","pontos positivos","pontos negativos"]
         dataframe = dataframe.fromkeys(chaves)
         df = pd.DataFrame([dataframe])
