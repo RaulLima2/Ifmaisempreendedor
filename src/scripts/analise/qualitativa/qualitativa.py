@@ -2,7 +2,6 @@ import dataclasses
 import pandas as pd
 from textblob import TextBlob
 from src.scripts.analise.analise import Analise
-from textblob.sentiments import NaiveBayesAnalyzer
 
 @dataclasses.dataclass
 class AnaliseQualitativa(Analise):
@@ -26,12 +25,10 @@ class AnaliseQualitativa(Analise):
     def analisetextblob(self, dataframe, chaves, item):
         try:
             itemtranduzido = str(TextBlob(item).translate(to='en'))
-            blob = TextBlob(itemtranduzido, analyzer=NaiveBayesAnalyzer())
+            blob = TextBlob(itemtranduzido)
             dataframe = dataframe.append({
                 chaves[0]: item,
-                chaves[1]: blob.sentiment.classification,
-                chaves[2]: blob.sentiment.p_pos,
-                chaves[3]: blob.sentiment.p_neg       
+                chaves[1]: blob.sentiment,  
             }, ignore_index=True)
         except Exception as e:
             print(e)
