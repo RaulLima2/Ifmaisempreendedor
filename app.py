@@ -1,13 +1,17 @@
 import os
+from rq import Queue
+from worker import conn
 from flask import request, Flask, render_template
 from jinja2 import Template
 from src import swot, gmail, gerarrelatorio, enviar_relatorio, empreendedor
 from src.scripts.matrix_swot import respontaswotexternoclassificacao, respostaswotexternoimportancia, respontaswotinternoclassificacao, respostaswotinternoimportancia, questaoswotexterno, questaoswotinterno
 
 app = Flask(__name__, template_folder='template', static_folder='static')
+queuetask = Queue(connection=conn)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    
     return render_template("index.html")
 
 
@@ -36,8 +40,8 @@ def matrix_swot():
 
         swot.enviar_matrixswot(gmail=gmail,nomedoarquivo=[empreendedor.setnome()+"externa", empreendedor.setnome()+"interna"], enderecoeletronico="raulbrunoslima@gmail.com", assuntodoenvio="Dados das Empreendedoras")
         
-        gerarrelatorio(swot.retornarnomedoarquivo())
-        enviar_relatorio(gmail=gmail,enderecoeletronico="raulbrunoslima@gmail.com", assuntodoenvio="Dados das Empreendedoras")
+        queuetask.enqueue(gerarrelatorio, swot.retornarnomedoarquivo)
+        queuetask.enqueue(enviar_relatorio, gmail, "raulbrunoslima@gmail.com", "Dados das Empreendedoras")
 
         return "Enviado"
     
