@@ -1,5 +1,5 @@
 import os
-from flask import request, Flask, render_template
+from flask import request, Flask, render_template, redirect, url_for
 from jinja2 import Template
 from src import swot, gmail, empreendedor
 from src.scripts.matrix_swot import respontaswotexternoclassificacao, respostaswotexternoimportancia, respontaswotinternoclassificacao, respostaswotinternoimportancia, questaoswotexterno, questaoswotinterno
