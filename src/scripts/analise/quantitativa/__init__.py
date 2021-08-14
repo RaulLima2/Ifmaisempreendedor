@@ -1,1 +1,0 @@
-from .quantitativa import AnaliseQuantitativa
