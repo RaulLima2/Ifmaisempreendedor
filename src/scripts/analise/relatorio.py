@@ -138,5 +138,5 @@ def gerarrelatorio(nomedoarquivo=str):
     criaritem(doc=doc,text=text['Analise Quantitativa'][1:])
     criarsubsection(doc=doc, namesubsection="Analise Grafíca", text=[""])
     imprimirlistas(doc=doc,text=text["Analise Grafica"], func=criarfigura)
-    doc.generate_pdf(filepath='Anexar/relatorio', clean_tex=True)
+    doc.generate_pdf(compiler='pdflatex', filepath='Anexar/relatorio', clean_tex=True)
     doc.dumps()
